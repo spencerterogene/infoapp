@@ -31,7 +31,7 @@ class _LoadingPageState extends State<LoadingPage> {
   void initState() {
     super.initState();
     // Simulate a delay (e.g., fetching data or initializing the app)
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 3), () {
       // Navigate to the LoginPage after the delay
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
@@ -67,38 +67,98 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 }
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  // Contrôleurs pour les champs de texte
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  // Variable pour le checkbox
+  bool rememberMe = false;
+
+  // Fonction pour remplir les champs avec les données de l'utilisateur
+  void fillFieldsWithSavedData() {
+    if (rememberMe) {
+      emailController.text = 'user@example.com'; // Exemple d'email enregistré
+      passwordController.text = 'password123'; // Exemple de mot de passe enregistré
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // Remplir les champs avec les données de l'utilisateur (si le checkbox est activé)
+    fillFieldsWithSavedData();
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Center(child: Text('Login'),) ,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const TextField(
-              decoration: InputDecoration(
+            // Champ Email
+            TextField(
+              controller: emailController,
+              decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16),
-            const TextField(
+            // Champ Mot de Passe
+            TextField(
+              controller: passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
               ),
             ),
+            const SizedBox(height: 16),
+            // Checkbox "Se souvenir de moi"
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Checkbox(
+                  value: rememberMe,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      rememberMe = value ?? false;
+                    });
+                  },
+                ),
+                const Text('Remember me'),
+              ],
+            ),
+            const SizedBox(height: 16),
+            // Bouton "Forgot Password"
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  // Naviguer vers la page ResetPasswordPage
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ResetPasswordPage(),
+                    ),
+                  );
+                },
+                child: const Text('Forgot Password?'),
+              ),
+            ),
             const SizedBox(height: 24),
+            // Bouton de Connexion
             ElevatedButton(
               onPressed: () {
-                // Navigate to the HomePage after login
+                // Naviguer vers la HomePage après connexion
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => const HomePage(),
@@ -108,9 +168,25 @@ class LoginPage extends StatelessWidget {
               child: const Text('Login'),
             ),
             const SizedBox(height: 16),
+                      // Bouton "Login with Google"
+          ElevatedButton(
+            onPressed: () {
+              // Logique pour se connecter avec Google
+              // Cela peut être intégré avec un package comme "google_sign_in"
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Logging in with Google...')),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue, // Utilisez backgroundColor au lieu de primary
+            ),
+            child: const Text('Login with Google'),
+          ),
+            const SizedBox(height: 16),
+            // Bouton pour créer un compte
             TextButton(
               onPressed: () {
-                // Navigate to the RegisterPage
+                // Naviguer vers la page d'inscription
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const RegisterPage(),
@@ -125,6 +201,122 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+
+class CreateNewPasswordPage extends StatelessWidget {
+  const CreateNewPasswordPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController confirmPasswordController = TextEditingController();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Create New Password'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Enter your new password below',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: passwordController,
+              obscureText: true,
+              decoration: const InputDecoration(
+                labelText: 'New Password',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: confirmPasswordController,
+              obscureText: true,
+              decoration: const InputDecoration(
+                labelText: 'Confirm Password',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {
+                if (passwordController.text == confirmPasswordController.text) {
+                  // Logique de sauvegarde du nouveau mot de passe
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Password reset successful!')),
+                  );
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                } else {
+                  // Afficher une erreur si les mots de passe ne correspondent pas
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Passwords do not match!')),
+                  );
+                }
+              },
+              child: const Text('Reset Password'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class ResetPasswordPage extends StatelessWidget {
+  const ResetPasswordPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Reset Password'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Enter your email to reset your password',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: emailController,
+              decoration: const InputDecoration(
+                labelText: 'Email',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {
+                // Simuler l'envoi d'un email (ajouter la logique réelle si nécessaire)
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const CreateNewPasswordPage(),
+                  ),
+                );
+              },
+              child: const Text('Send Reset Link'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
