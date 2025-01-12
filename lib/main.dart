@@ -53,7 +53,7 @@ class _LoadingPageState extends State<LoadingPage> {
             // const Icon(
             //   Icons.circle, // Vous pouvez remplacer par un logo personnalisé
             //   size: 100,
-            //   color: Colors.blue, // Couleur bleue pour l'icône
+            //   color: Colors.blue, // Couleur bleue pou r l'icône
             // ),
             const SizedBox(height: 20), // Espacement avant l'indicateur de chargement
             
@@ -523,27 +523,81 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Function to show a "More Info" dialog
-  void _showMoreInfoDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('More Info'),
-          content: const Text(
-              'This is additional information about the current screen.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: const Text('OK'),
+  // Function to show a dialog with a list of options (Settings, FAQ, Log Out)
+void _showMoreInfoDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20), // Rounded corners
+        ),
+        backgroundColor: Colors.blue[50], // Light blue background
+        title: Row(
+          children: [
+            Icon(
+              Icons.menu, // Menu icon
+              color: Colors.blue,
+            ),
+            const SizedBox(width: 8), // Space between icon and title
+            const Text(
+              'More Options',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
-        );
-      },
-    );
-  }
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min, // Make the dialog height dynamic
+          children: [
+            // Settings item
+            ListTile(
+              leading: const Icon(Icons.settings, color: Colors.blue),
+              title: const Text('Settings'),
+              onTap: () {
+                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsPage(), // Navigate to SettingsPage
+                  ),
+                );
+              },
+            ),
+            const Divider(), // Divider line
+            // FAQ item
+            ListTile(
+              leading: const Icon(Icons.help_outline, color: Colors.blue),
+              title: const Text('FAQ'),
+              onTap: () {
+                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const FAQPage(), // Navigate to FAQPage
+                  ),
+                );
+              },
+            ),
+            const Divider(), // Divider line
+            // Log Out item
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text('Log Out'),
+              onTap: () {
+                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const LoginPage(), // Navigate to LoginPage
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
 }
 
 // Pages for each bottom navigation item
@@ -613,6 +667,46 @@ class ProfileScreen extends StatelessWidget {
       child: Text(
         'Profile Screen',
         style: TextStyle(fontSize: 24),
+      ),
+    );
+  }
+}
+
+class FAQPage extends StatelessWidget {
+  const FAQPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('FAQ'),
+        backgroundColor: Colors.blue,
+      ),
+      body: const Center(
+        child: Text(
+          'FAQ Page',
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
+    );
+  }
+}
+
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Settings'),
+        backgroundColor: Colors.blue,
+      ),
+      body: const Center(
+        child: Text(
+          'Settings Page',
+          style: TextStyle(fontSize: 24),
+        ),
       ),
     );
   }
