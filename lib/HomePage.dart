@@ -8,7 +8,6 @@ import 'ProfileScreen.dart';
 import 'FAQPage.dart';
 import 'SettingsPage.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -124,8 +123,12 @@ class _HomePageState extends State<HomePage> {
                   Navigator.of(context).pop(); // Close the dialog
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) =>
-                          const SettingsPage(), // Navigate to SettingsPage
+                      builder: (context) => SettingsPage(
+                        isDarkMode: false, // Provide the appropriate value
+                        onThemeChanged: (bool value) {
+                          // Handle theme change
+                        },
+                      ), // Navigate to SettingsPage
                     ),
                   );
                 },
