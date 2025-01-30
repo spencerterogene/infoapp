@@ -14,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool rememberMe = false;
+  bool isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -64,19 +65,29 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 20),
               TextField(
                 controller: emailController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 16),
               TextField(
-                controller: passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
+                 obscureText: !isPasswordVisible,
+                decoration:  InputDecoration(
                   labelText: 'Password',
                   border: OutlineInputBorder(),
-                  suffixIcon: Icon(Icons.visibility_off),
+                  suffixIcon: IconButton(
+                  icon: Icon(
+                    isPasswordVisible 
+                      ? Icons.visibility 
+                      : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isPasswordVisible = !isPasswordVisible;
+                    });
+                  },
+                ),
                 ),
               ),
               const SizedBox(height: 10),
