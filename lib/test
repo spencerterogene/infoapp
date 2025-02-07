@@ -1,0 +1,639 @@
+// // import 'package:flutter/material.dart';
+
+// // void main() {
+// //   runApp(MyApp());
+// // }
+
+// // class MyApp extends StatelessWidget {
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return MaterialApp(
+// //       title: 'Student Planner',
+// //       theme: ThemeData(
+// //         primarySwatch: Colors.blue,
+// //       ),
+// //       home: HomePage(),
+// //     );
+// //   }
+// // }
+
+// // class HomePage extends StatelessWidget {
+// //   final List<Map<String, String>> events = [
+// //     {
+// //       'title': 'ENG 101 Study for Exam',
+// //       'description': 'SAT, MAY 11 7:00 PM MST',
+// //       'location': 'Hayden Library, Tempe',
+// //     },
+// //     {
+// //       'title': 'Meetup for Graduation',
+// //       'description': 'SAT, MAY 11 7:00 PM MST',
+// //       'location': 'Hayden Library, Tempe',
+// //     },
+// //     {
+// //       'title': 'Birthday Celebration',
+// //       'description': 'SAT, MAY 11 7:00 PM MST',
+// //       'location': 'Hayden Library, Tempe',
+// //     },
+// //   ];
+
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return Scaffold(
+// //       appBar: AppBar(
+// //         title: Text('Student Planner'),
+// //       ),
+// //       body: ListView.builder(
+// //         itemCount: events.length,
+// //         itemBuilder: (context, index) {
+// //           final event = events[index];
+// //           return InkWell(
+// //             onTap: () {
+// //               // Handle item click
+// //               ScaffoldMessenger.of(context).showSnackBar(
+// //                 SnackBar(content: Text('Clicked: ${event['title']}')),
+// //               );
+// //             },
+// //             child: EventItem(
+// //               title: event['title']!,
+// //               description: event['description']!,
+// //               location: event['location']!,
+// //             ),
+// //           );
+// //         },
+// //       ),
+// //     );
+// //   }
+// // }
+
+// // class EventItem extends StatelessWidget {
+// //   final String title;
+// //   final String description;
+// //   final String location;
+
+// //   const EventItem({
+// //     required this.title,
+// //     required this.description,
+// //     required this.location,
+// //   });
+
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return Card(
+// //       margin: EdgeInsets.all(8.0),
+// //       child: Padding(
+// //         padding: EdgeInsets.all(16.0),
+// //         child: Column(
+// //           crossAxisAlignment: CrossAxisAlignment.start,
+// //           children: [
+// //             Text(
+// //               title,
+// //               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+// //             ),
+// //             SizedBox(height: 8.0),
+// //             Text(
+// //               description,
+// //               style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+// //             ),
+// //             SizedBox(height: 8.0),
+// //             Text(
+// //               location,
+// //               style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+// //             ),
+// //             SizedBox(height: 8.0),
+// //             ElevatedButton(
+// //               onPressed: () {
+// //                 // Handle start count button click
+// //                 ScaffoldMessenger.of(context).showSnackBar(
+// //                   SnackBar(content: Text('Start Count: $title')),
+// //                 );
+// //               },
+// //               child: Text('Start Count'),
+// //             ),
+// //           ],
+// //         ),
+// //       ),
+// //     );
+// //   }
+// // }
+
+
+
+
+// // //Show date picker
+
+
+// void _showDatePicker() async {
+//     final DateTime? pickedDate = await showDatePicker(
+//       context: context,
+//       initialDate: DateTime.now(),
+//       firstDate: DateTime(2000),
+//       lastDate: DateTime(2100),
+//     );
+//     if (pickedDate != null) {
+//       setState(() {
+//         _currentMonthIndex = pickedDate.month - 1;
+//       });
+//     }
+//   }
+
+
+
+
+
+
+
+
+// // import 'package:flutter/material.dart';
+// // import 'HomeScreen.dart';
+// // import 'SearchScreen.dart';
+// // import 'ScannerScreen.dart';
+// // import 'MessageScreen.dart';
+// // import 'MyFileScreen.dart';
+// // import 'MoreOptions.dart';
+
+// // class HomePage extends StatefulWidget {
+// //   const HomePage({super.key});
+
+// //   @override
+// //   State<HomePage> createState() => _HomePageState();
+// // }
+
+// // class _HomePageState extends State<HomePage> {
+// //   int _currentIndex = 0;
+// //   int _currentMonthIndex = DateTime.now().month - 1; // Default to current month
+// //   final List<String> _months = [
+// //     'January',
+// //     'February',
+// //     'March',
+// //     'April',
+// //     'May',
+// //     'June',
+// //     'July',
+// //     'August',
+// //     'September',
+// //     'October',
+// //     'November',
+// //     'December'
+// //   ];
+
+// //   final List<Widget> _pages = [
+// //     const HomeScreen(),
+// //     const SearchScreen(),
+// //     const ScannerScreen(),
+// //     const MessageScreen(),
+// //     const MyFileScreen(),
+// //   ];
+
+// //   void _previousMonth() {
+// //     setState(() {
+// //       _currentMonthIndex = (_currentMonthIndex - 1) % 12;
+// //       if (_currentMonthIndex < 0) _currentMonthIndex = 11;
+// //     });
+// //   }
+
+// //   void _nextMonth() {
+// //     setState(() {
+// //       _currentMonthIndex = (_currentMonthIndex + 1) % 12;
+// //     });
+// //   }
+
+//   // void _showDatePicker() async {
+//   //   final DateTime? pickedDate = await showDatePicker(
+//   //     context: context,
+//   //     initialDate: DateTime.now(),
+//   //     firstDate: DateTime(2000),
+//   //     lastDate: DateTime(2100),
+//   //   );
+//   //   if (pickedDate != null) {
+//   //     setState(() {
+//   //       _currentMonthIndex = pickedDate.month - 1;
+//   //     });
+//   //   }
+//   // }
+
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return Scaffold(
+// //       appBar: AppBar(
+// //         leading: IconButton(
+// //           icon: const Icon(Icons.more_vert),
+// //           onPressed: () {
+// //             Navigator.of(context).push(
+// //               MaterialPageRoute(
+// //                 builder: (context) => const MoreOptionsPage(),
+// //               ),
+// //             );
+// //           },
+// //         ),
+// //         title: Row(
+// //           mainAxisAlignment: MainAxisAlignment.center,
+// //           children: [
+// //             IconButton(
+// //               icon: const Icon(Icons.arrow_back_ios),
+// //               onPressed: _previousMonth,
+// //             ),
+// //             Text(
+// //               _months[_currentMonthIndex],
+// //               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+// //             ),
+// //             IconButton(
+// //               icon: const Icon(Icons.arrow_forward_ios),
+// //               onPressed: _nextMonth,
+// //             ),
+// //           ],
+// //         ),
+// //         centerTitle: true,
+// //         actions: [
+// //           IconButton(
+// //             icon: const Icon(Icons.calendar_today),
+// //             onPressed: _showDatePicker,
+// //           ),
+// //         ],
+// //       ),
+// //       body: Column(
+// //         children: [
+// //           Expanded(
+// //             child: ListView.builder(
+// //               itemCount: 5, // Replace with your actual data length
+// //               itemBuilder: (context, index) {
+// //                 return _buildEventItem(index + 1);
+// //               },
+// //             ),
+// //           ),
+// //         ],
+// //       ),
+// //       floatingActionButton: FloatingActionButton(
+// //         onPressed: () {
+// //           // Add functionality for the FAB
+// //         },
+// //         child: const Icon(Icons.add),
+// //       ),
+// //       bottomNavigationBar: BottomNavigationBar(
+// //         type: BottomNavigationBarType.fixed,
+// //         currentIndex: _currentIndex,
+// //         selectedItemColor: Colors.blue,
+// //         onTap: (int index) {
+// //           setState(() {
+// //             _currentIndex = index;
+// //           });
+// //         },
+// //         items: const <BottomNavigationBarItem>[
+// //           BottomNavigationBarItem(
+// //             icon: Icon(Icons.home),
+// //             label: 'Home',
+// //           ),
+// //           BottomNavigationBarItem(
+// //             icon: Icon(Icons.search),
+// //             label: 'Search',
+// //           ),
+// //           BottomNavigationBarItem(
+// //             icon: Icon(Icons.qr_code_scanner),
+// //             label: 'Scanner',
+// //           ),
+// //           BottomNavigationBarItem(
+// //             icon: Icon(Icons.message),
+// //             label: 'Message',
+// //           ),
+// //           BottomNavigationBarItem(
+// //             icon: Icon(Icons.folder),
+// //             label: 'My Files',
+// //           ),
+// //         ],
+// //       ),
+// //     );
+// //   }
+
+// //   Widget _buildEventItem(int index) {
+// //     return Card(
+// //       margin: const EdgeInsets.all(8.0),
+// //       child: Padding(
+// //         padding: const EdgeInsets.all(16.0),
+// //         child: Column(
+// //           crossAxisAlignment: CrossAxisAlignment.start,
+// //           children: [
+// //             Text(
+// //               'Event Title $index',
+// //               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+// //             ),
+// //             const SizedBox(height: 8),
+// //             const Text(
+// //               'Description of the event goes here. This is a sample description.',
+// //               style: TextStyle(fontSize: 14),
+// //             ),
+// //             const SizedBox(height: 8),
+// //             const Text(
+// //               'SAT, MAY 11 7:00 PM MST',
+// //               style: TextStyle(fontSize: 14, color: Colors.grey),
+// //             ),
+// //             const SizedBox(height: 16),
+// //             ElevatedButton(
+// //               onPressed: () {
+// //                 // Add functionality for the button
+// //               },
+// //               style: ElevatedButton.styleFrom(
+// //                 backgroundColor: Colors.blue,
+// //                 minimumSize: const Size(double.infinity, 40),
+// //               ),
+// //               child: const Text('Start Count'),
+// //             ),
+// //           ],
+// //         ),
+// //       ),
+// //     );
+// //   }
+// // }
+
+
+// // the good one
+// // import 'package:flutter/material.dart';
+// // import "MoreOptionsScreen.dart";
+
+// // class HomePage extends StatefulWidget {
+// //   const HomePage({super.key});
+
+// //   @override
+// //   State<HomePage> createState() => _HomePageState();
+// // }
+
+// // class _HomePageState extends State<HomePage> {
+// //   int _currentMonthIndex = DateTime.now().month - 1; // Default to current month
+
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return MaterialApp(
+// //       home: Scaffold(
+// //         appBar: AppBar(
+// //           title: Center(child: Text('Student Planner')),
+// //           leading: IconButton(
+// //             icon: Icon(Icons.more_vert),
+// //             onPressed: () {
+// //               Navigator.of(context).push(
+// //                 MaterialPageRoute(
+// //                     builder: (context) => const MoreOptionsScreen()),
+// //               );
+// //             },
+// //           ),
+// //           actions: [
+// //             IconButton(
+// //               icon: Icon(Icons.calendar_today),
+// //               onPressed: () => _showDatePicker(),
+// //             ),
+// //           ],
+// //         ),
+// //         body: Center(
+// //           child: Text('Welcome to Student Planner!'),
+// //         ),
+// //       ),
+// //     );
+// //   }
+
+// //   void _showDatePicker() async {
+// //     final DateTime? pickedDate = await showDatePicker(
+// //       context: context,
+// //       initialDate: DateTime.now(),
+// //       firstDate: DateTime(2000),
+// //       lastDate: DateTime(2100),
+// //     );
+// //     if (pickedDate != null) {
+// //       setState(() {
+// //         _currentMonthIndex = pickedDate.month - 1;
+// //       });
+// //     }
+// //   }
+// // }
+
+
+
+
+
+// // pin event
+// import 'package:flutter/material.dart';
+
+// void main() {
+//   runApp(const MaterialApp(
+//     debugShowCheckedModeBanner: false,
+//     home: EventPinScreen(),
+//   ));
+// }
+
+// class EventPinScreen extends StatefulWidget {
+//   const EventPinScreen({super.key});
+
+//   @override
+//   _EventPinScreenState createState() => _EventPinScreenState();
+// }
+
+// class _EventPinScreenState extends State<EventPinScreen> {
+//   List<Map<String, String>> pinnedEvents = [];
+
+//   void showPinEventDialog(BuildContext context) {
+//     // TextEditingController titleController =
+//     //     TextEditingController(text: "ENG 101 Study for Exam");
+//     // TextEditingController descriptionController =
+//     //     TextEditingController(text: "SAT, MAY 11 7:00 PM MST");
+//     // TextEditingController locationController =
+//     //     TextEditingController(text: "Hayden Library, Tempe");
+
+//     showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+//           title: const Text("Pin Event"),
+//           content: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               TextField(
+//                 controller: titleController,
+//                 decoration: const InputDecoration(labelText: "Title"),
+//               ),
+//               TextField(
+//                 controller: descriptionController,
+//                 decoration: const InputDecoration(labelText: "Description"),
+//               ),
+//               TextField(
+//                 controller: locationController,
+//                 decoration: const InputDecoration(labelText: "Location"),
+//               ),
+//             ],
+//           ),
+//           actions: [
+//             TextButton(
+//               onPressed: () => Navigator.pop(context),
+//               child: const Text("Cancel"),
+//             ),
+//             ElevatedButton(
+//               onPressed: () {
+//                 setState(() {
+//                   pinnedEvents.add({
+//                     "title": titleController.text,
+//                     "description": descriptionController.text,
+//                     "location": locationController.text,
+//                   });
+//                 });
+//                 Navigator.pop(context);
+//               },
+//               child: const Text("Pin"),
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: const Text("Pinned Events")),
+//       body: Column(
+//         children: [
+//           // Section des événements
+//           Expanded(
+//             child: ListView(
+//               scrollDirection: Axis.horizontal,
+//               children: [
+//                 _buildAddCard(),
+//                 ...pinnedEvents.map((event) => _buildEventCard(event)).toList(),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget _buildAddCard() {
+//     return GestureDetector(
+//       onTap: () => showPinEventDialog(context),
+//       child: Container(
+//         width: 150,
+//         margin: const EdgeInsets.all(10),
+//         decoration: BoxDecoration(
+//           border: Border.all(color: Colors.grey, width: 2),
+//           shape: BoxShape.circle,
+//         ),
+//         child: const Center(
+//           child: Icon(Icons.add, size: 40, color: Colors.grey),
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget _buildEventCard(Map<String, String> event) {
+//     return Container(
+//       width: 200,
+//       margin: const EdgeInsets.all(10),
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(12),
+//         color: Colors.white,
+//         boxShadow: [
+//           BoxShadow(color: Colors.black26, blurRadius: 5, spreadRadius: 2),
+//         ],
+//       ),
+//       child: Padding(
+//         padding: const EdgeInsets.all(12.0),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Row(
+//               children: [
+//                 const CircleAvatar(
+//                   backgroundImage: AssetImage("assets/avatar.png"),
+//                 ),
+//                 const SizedBox(width: 10),
+//                 Expanded(
+//                   child: Text(event["title"] ?? "",
+//                       style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+//                       overflow: TextOverflow.ellipsis),
+//                 ),
+//               ],
+//             ),
+//             const SizedBox(height: 8),
+//             Text(event["description"] ?? "", style: const TextStyle(color: Colors.grey)),
+//             const SizedBox(height: 8),
+//             Text(event["location"] ?? "", style: const TextStyle(fontWeight: FontWeight.w500)),
+//             const SizedBox(height: 8),
+//             ElevatedButton(
+//               onPressed: () {},
+//               child: const Text("Join Group"),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// Affiche la boîte de dialogue pour ajouter une tâche
+  void _showTaskDialog(BuildContext context) {
+    TextEditingController titleController = TextEditingController();
+    TextEditingController descriptionController = TextEditingController();
+    TextEditingController locationController = TextEditingController();
+    String selectedTaskType = "Devoir"; // Valeur par défaut
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          title: const Text("Add Task"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(controller: titleController, decoration: const InputDecoration(labelText: "Title")),
+              TextField(controller: descriptionController, decoration: const InputDecoration(labelText: "Description")),
+              TextField(controller: locationController, decoration: const InputDecoration(labelText: "Location")),
+              const SizedBox(height: 10),
+              DropdownButtonFormField<String>(
+                value: selectedTaskType,
+                decoration: const InputDecoration(labelText: "Task Type"),
+                items: ["Devoir", "Cours", "Examen"].map((String category) {
+                  return DropdownMenuItem(value: category, child: Text(category));
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedTaskType = newValue!;
+                  });
+                },
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  taskList.add({
+                    "title": titleController.text,
+                    "description": descriptionController.text,
+                    "location": locationController.text,
+                    "type": selectedTaskType, // Stockage du type pour l’icône
+                  });
+                });
+                Navigator.pop(context);
+              },
+              child: const Text("Add"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Retourne l’icône en fonction du type de tâche
+  IconData _getTaskIcon(String taskType) {
+    switch (taskType) {
+      case "Devoir":
+        return Icons.menu_book; // 📖 Livre ouvert
+      case "Cours":
+        return Icons.book; // 📕 Livre fermé
+      case "Examen":
+        return Icons.description; // 📂 Fichier
+      default:
+        return Icons.event_note; // 📝 Icône générique
+    }
+  }
+

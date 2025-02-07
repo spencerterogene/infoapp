@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MoreOptionsPage extends StatelessWidget {
-  const MoreOptionsPage({super.key});
+class MoreOptionsScreen extends StatelessWidget {
+  const MoreOptionsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
