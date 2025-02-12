@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:infoapp/LoginPage.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -66,7 +67,9 @@ class RegisterPage extends StatelessWidget {
               // Sign Up Button
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
@@ -121,7 +124,10 @@ class RegisterPage extends StatelessWidget {
                   const Text("Already have an account? "),
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
+                      );
                     },
                     child: const Text(
                       'Login',

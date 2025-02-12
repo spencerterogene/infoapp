@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'HomePage.dart';
 import "MoreOptionsScreen.dart";
+import 'SearchScreen.dart';
+import 'ScannerScreen.dart';
+import 'MessageScreen.dart';
+import 'MyFileScreen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,7 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
+  
   int _currentMonthIndex = DateTime.now().month - 1; // Default to current month
 
   DateTime _selectedDate = DateTime.now();
@@ -33,40 +38,27 @@ class _HomePageState extends State<HomePage> {
             );
           },
         ),
+        
         actions: [
           IconButton(
-            icon: const Icon(Icons.calendar_today), // Icône calendrier en haut à droite
-             onPressed: _showDatePicker, // ✨ Ajoute ta propre méthode ici
+            icon: const Icon(
+                Icons.calendar_today), // Icône calendrier en haut à droite
+            onPressed: _showDatePicker, // ✨ Ajoute ta propre méthode ici
           ),
         ],
       ),
       body: Column(
-        children: [
-          _buildPinnedEventsSection(), // Affichage des événements épinglés sous forme de cartes
-          Expanded(child: _buildTaskList()), // Affichage des tâches sous forme de liste
+        children: [_buildPinnedEventsSection(), // Affichage des événements épinglés sous forme de cartes
+          Expanded(child:_buildTaskList()), // Affichage des tâches sous forme de liste
         ],
       ),
+
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showTasDialog(context), // ✨ Afficher le dialogue d'ajout de tâche
+        onPressed: () =>
+            _showTasDialog(context), // ✨ Afficher le dialogue d'ajout de tâche
         child: const Icon(Icons.add),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.blue,
-        onTap: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.qr_code_scanner), label: 'Scanner'),
-          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Message'),
-          BottomNavigationBarItem(icon: Icon(Icons.folder), label: 'My Files'),
-        ],
-      ),
+      
     );
   }
 
@@ -99,11 +91,15 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(event["title"]!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          Text(event["title"]!,
+              style:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 5),
-          Text(event["description"]!, style: const TextStyle(fontSize: 14, color: Colors.black54)),
+          Text(event["description"]!,
+              style: const TextStyle(fontSize: 14, color: Colors.black54)),
           const SizedBox(height: 5),
-          Text(event["location"]!, style: const TextStyle(fontSize: 12, color: Colors.blueGrey)),
+          Text(event["location"]!,
+              style: const TextStyle(fontSize: 12, color: Colors.blueGrey)),
         ],
       ),
     );
@@ -121,7 +117,8 @@ class _HomePageState extends State<HomePage> {
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: Colors.black26),
         ),
-        child: const Center(child: Icon(Icons.add, size: 40, color: Colors.black54)),
+        child: const Center(
+            child: Icon(Icons.add, size: 40, color: Colors.black54)),
       ),
     );
   }
@@ -129,7 +126,8 @@ class _HomePageState extends State<HomePage> {
   // 🔹 Liste verticale des tâches normales
   Widget _buildTaskList() {
     return taskList.isEmpty
-        ? const Center(child: Text("No tasks added", style: TextStyle(fontSize: 16)))
+        ? const Center(
+            child: Text("No tasks added", style: TextStyle(fontSize: 16)))
         : ListView.builder(
             padding: const EdgeInsets.all(10),
             itemCount: taskList.length,
@@ -146,15 +144,19 @@ class _HomePageState extends State<HomePage> {
       margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
-        title: Text(task['title']!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        title: Text(task['title']!,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(task['description']!, style: const TextStyle(fontSize: 14, color: Colors.black54)),
-            Text(task['location']!, style: const TextStyle(fontSize: 12, color: Colors.blueGrey)),
+            Text(task['description']!,
+                style: const TextStyle(fontSize: 14, color: Colors.black54)),
+            Text(task['location']!,
+                style: const TextStyle(fontSize: 12, color: Colors.blueGrey)),
           ],
         ),
-        trailing: Icon(_getTaskIcon(task['type']!)), // Ajout de l’icône appropriée
+        trailing:
+            Icon(_getTaskIcon(task['type']!)), // Ajout de l’icône appropriée
       ),
     );
   }
@@ -170,14 +172,21 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           title: Text(isPinnedEvent ? "Add Pinned Event" : "Add Task"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(controller: titleController, decoration: const InputDecoration(labelText: "Title")),
-              TextField(controller: descriptionController, decoration: const InputDecoration(labelText: "Description")),
-              TextField(controller: locationController, decoration: const InputDecoration(labelText: "Location")),
+              TextField(
+                  controller: titleController,
+                  decoration: const InputDecoration(labelText: "Title")),
+              TextField(
+                  controller: descriptionController,
+                  decoration: const InputDecoration(labelText: "Description")),
+              TextField(
+                  controller: locationController,
+                  decoration: const InputDecoration(labelText: "Location")),
             ],
           ),
           actions: [
@@ -204,10 +213,11 @@ class _HomePageState extends State<HomePage> {
   // 🔹 Sélection de l’icône en fonction du type de tâche
   IconData _getTaskIcon(String taskType) {
     return {
-      "Devoir": Icons.menu_book,
-      "Cours": Icons.book,
-      "Examen": Icons.description,
-    }[taskType] ?? Icons.event_note;
+          "Devoir": Icons.menu_book,
+          "Cours": Icons.book,
+          "Examen": Icons.description,
+        }[taskType] ??
+        Icons.event_note;
   }
 
 // Affiche la boîte de dialogue pour ajouter une tâche
@@ -221,20 +231,28 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           title: const Text("Add Task"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(controller: titleController, decoration: const InputDecoration(labelText: "Title")),
-              TextField(controller: descriptionController, decoration: const InputDecoration(labelText: "Description")),
-              TextField(controller: locationController, decoration: const InputDecoration(labelText: "Location")),
+              TextField(
+                  controller: titleController,
+                  decoration: const InputDecoration(labelText: "Title")),
+              TextField(
+                  controller: descriptionController,
+                  decoration: const InputDecoration(labelText: "Description")),
+              TextField(
+                  controller: locationController,
+                  decoration: const InputDecoration(labelText: "Location")),
               const SizedBox(height: 10),
               DropdownButtonFormField<String>(
                 value: selectedTaskType,
                 decoration: const InputDecoration(labelText: "Task Type"),
                 items: ["Devoir", "Cours", "Examen"].map((String category) {
-                  return DropdownMenuItem(value: category, child: Text(category));
+                  return DropdownMenuItem(
+                      value: category, child: Text(category));
                 }).toList(),
                 onChanged: (String? newValue) {
                   setState(() {
@@ -269,7 +287,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-void _showDatePicker() async {
+  void _showDatePicker() async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -281,6 +299,5 @@ void _showDatePicker() async {
         _currentMonthIndex = pickedDate.month - 1;
       });
     }
-  }  
-
+  }
 }

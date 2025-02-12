@@ -1,4 +1,16 @@
 import 'package:flutter/material.dart';
+import 'EditProfilePage.dart';
+//import 'SecurityPage.dart';
+//import 'NotificationsPage.dart';
+//import 'PrivacyPolicyPage.dart';
+import 'FAQPage.dart';
+//import 'HelpSupportPage.dart';
+import 'SettingsPage.dart';
+//import 'BackupPage.dart';
+//import 'LanguagePage.dart';
+//import 'ReportProblemPage.dart';
+import 'RegisterPage.dart';
+import 'LoginPage.dart';
 
 class MoreOptionsScreen extends StatelessWidget {
   const MoreOptionsScreen({super.key});
@@ -16,22 +28,140 @@ class MoreOptionsScreen extends StatelessWidget {
       body: ListView(
         children: [
           _buildSectionTitle('Account'),
-          _buildSettingsItem(Icons.person, 'Edit profile'),
-          _buildSettingsItem(Icons.security, 'Security'),
-          _buildSettingsItem(Icons.notifications, 'Notifications'),
-          _buildSettingsItem(Icons.privacy_tip, 'Privacy policy'),
-
+          _buildSettingsItem(
+            context,
+            Icons.person,
+            'Edit profile',
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => EditProfilePage()),
+              );
+            },
+          ),
+          // _buildSettingsItem(
+          //   context,
+          //   Icons.security,
+          //   'Security',
+          //   onTap: () {
+          //     Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => SecurityPage()),
+          //     );
+          //   },
+          // ),
+          // _buildSettingsItem(
+          //   context,
+          //   Icons.notifications,
+          //   'Notifications',
+          //   onTap: () {
+          //     Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => NotificationsPage()),
+          //     );
+          //   },
+          // ),
+          // _buildSettingsItem(
+          //   context,
+          //   Icons.privacy_tip,
+          //   'Privacy policy',
+          //   onTap: () {
+          //     Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => PrivacyPolicyPage()),
+          //     );
+          //   },
+          // ),
           _buildSectionTitle('Support & About'),
-          _buildSettingsItem(Icons.help_outline, 'FAQ'),
-          _buildSettingsItem(Icons.support_agent, 'Help & Support'),
-          _buildSettingsItem(Icons.settings, 'Settings'),
-          _buildSettingsItem(Icons.backup, 'Backup in the Cloud'),
+          _buildSettingsItem(
+            context,
+            Icons.help_outline,
+            'FAQ',
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => FAQPage()),
+              );
+            },
+          ),
+          // _buildSettingsItem(
+          //   context,
+          //   Icons.support_agent,
+          //   'Help & Support',
+          //   onTap: () {
+          //     Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => HelpSupportPage()),
+          //     );
+          //   },
+          // ),
+          // _buildSettingsItem(
+          //   context,
+          //   Icons.settings,
+          //   'Settings',
+          //   onTap: () {
+          //     Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => SettingsPage()),
+          //     );
+          //   },
+          // ),
+          // _buildSettingsItem(
+          //   context,
+          //   Icons.backup,
+          //   'Backup in the Cloud',
+          //   onTap: () {
+          //     Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => BackupPage()),
+          //     );
+          //   },
+          // ),
+          // _buildSectionTitle('Actions'),
+          // _buildSettingsItem(
+          //   context,
+          //   Icons.language,
+          //   'Language',
+          //   onTap: () {
+          //     Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => LanguagePage()),
+          //     );
+          //   },
+          // ),
+          // _buildSettingsItem(
+          //   context,
+          //   Icons.report,
+          //   'Report a problem',
+          //   onTap: () {
+          //     Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => ReportProblemPage()),
+          //     );
+          //   },
+          // ),
+          _buildSettingsItem(
+            context,
+            Icons.person_add,
+            'Add account',
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => RegisterPage()),
+              );
+            },
+          ),
 
-          _buildSectionTitle('Actions'),
-          _buildSettingsItem(Icons.language, 'Language'),
-          _buildSettingsItem(Icons.report, 'Report a problem'),
-          _buildSettingsItem(Icons.person_add, 'Add account'),
-          _buildSettingsItem(Icons.logout, 'Log out', isDestructive: true),
+          _buildSettingsItem(
+            context,
+            Icons.logout, // Icone de déconnexion
+            'Logout',
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+          ),
+
+
+
+          // IconButton(
+          //   icon: const Icon(Icons.logout, color: Colors.red),
+          //   onPressed: () {
+          //     Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => const LoginPage()),
+          //     );
+          //   },
+          // ),
         ],
       ),
     );
@@ -48,11 +178,20 @@ class MoreOptionsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSettingsItem(IconData icon, String title, {bool isDestructive = false}) {
+  Widget _buildSettingsItem(
+    BuildContext context,
+    IconData icon,
+    String title, {
+    VoidCallback? onTap,
+    bool isDestructive = false,
+  }) {
     return ListTile(
       leading: Icon(icon, color: isDestructive ? Colors.red : Colors.black),
-      title: Text(title, style: TextStyle(color: isDestructive ? Colors.red : Colors.black)),
-      onTap: () {},
+      title: Text(
+        title,
+        style: TextStyle(color: isDestructive ? Colors.red : Colors.black),
+      ),
+      onTap: onTap, // Ajout de l'action onTap
     );
   }
 }
