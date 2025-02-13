@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MyFileScreen extends StatefulWidget {
+ const MyFileScreen({super.key});
+
   @override
   _MyFileScreenState createState() => _MyFileScreenState();
 }
@@ -56,6 +58,43 @@ class _MyFileScreenState extends State<MyFileScreen> {
     );
   }
 
+  void _showContextMenu(int index) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Wrap(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.content_copy),
+              title: const Text("Copier"),
+              onTap: () {
+                Navigator.pop(context);
+                _copyItem(index);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.drive_file_rename_outline),
+              title: const Text("Rename"),
+              onTap: () {
+                Navigator.pop(context);
+                //_copyItem(index);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.drive_file_move),
+              title: const Text("Déplacer"),
+              onTap: () {
+                Navigator.pop(context);
+                _moveItem(index);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   Widget _dialogOption(String label, IconData icon, String type) {
     return ListTile(
       leading: Icon(icon, color: Colors.blue),
@@ -71,13 +110,13 @@ class _MyFileScreenState extends State<MyFileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context); // Retour à la page précédente
-          },
-        ),
-        title: const Text("Search"),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () {
+        //     Navigator.pop(context); // Retour à la page précédente
+        //   },
+        // ),
+        title: const Text("My File"),
         actions: [
           IconButton(
             icon: Icon(isGridView ? Icons.list : Icons.grid_view),
@@ -121,13 +160,17 @@ class _MyFileScreenState extends State<MyFileScreen> {
                       ),
                       itemCount: items.length,
                       itemBuilder: (context, index) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(items[index]["icon"],
-                                size: 50, color: Colors.blue),
-                            Text(items[index]["type"]),
-                          ],
+                         return GestureDetector(
+                          onLongPress: () {
+                            _showContextMenu(index);
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(items[index]["icon"], size: 50, color: Colors.blue),
+                              Text(items[index]["name"]),
+                            ],
+                          ),
                         );
                       },
                     )
@@ -150,5 +193,22 @@ class _MyFileScreenState extends State<MyFileScreen> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+   void _copyItem(int index) {
+    setState(() {
+      items.add({
+        "type": items[index]["type"],
+        "name": "${items[index]["name"]} (copie)",
+        "icon": items[index]["icon"],
+      });
+    });
+  }
+
+  void _moveItem(int index) {
+    setState(() {
+      final item = items.removeAt(index);
+      items.insert(0, item); // Déplace en haut de la liste
+    });
   }
 }

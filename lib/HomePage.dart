@@ -14,7 +14,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  
+  final List<Widget> _pages = [
+    HomePage(),
+    SearchScreen(),
+    ScannerScreen(),
+    MessageScreen(),
+    MyFileScreen(),
+  ];
+
+  int _currentIndex = 0;
   int _currentMonthIndex = DateTime.now().month - 1; // Default to current month
 
   DateTime _selectedDate = DateTime.now();
@@ -24,41 +32,81 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text("Student Planner"),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.more_vert),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const MoreOptionsScreen(),
+      // Affichage conditionnel de l'AppBar uniquement quand _currentIndex == 0
+      appBar: _currentIndex == 0
+          ? AppBar(
+              title: const Center(
+                child: Text("Student Planner"),
               ),
-            );
-          },
-        ),
-        
-        actions: [
-          IconButton(
-            icon: const Icon(
-                Icons.calendar_today), // Icône calendrier en haut à droite
-            onPressed: _showDatePicker, // ✨ Ajoute ta propre méthode ici
+              leading: IconButton(
+                icon: const Icon(Icons.more_vert),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const MoreOptionsScreen(),
+                    ),
+                  );
+                },
+              ),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.calendar_today),
+                  onPressed: _showDatePicker,
+                ),
+              ],
+            )
+          : null,
+
+      // Affichage conditionnel du body
+      body: _currentIndex == 0
+          ? Column(
+              children: [
+                _buildPinnedEventsSection(), // Affichage des événements épinglés sous forme de cartes
+                Expanded(child: _buildTaskList()), // Affichage des tâches sous forme de liste
+              ],
+            )
+          : _pages[_currentIndex],
+
+      // Affichage conditionnel du FloatingActionButton uniquement quand _currentIndex == 0
+      floatingActionButton: _currentIndex == 0
+          ? FloatingActionButton(
+              onPressed: () => _showTasDialog(context),
+              child: const Icon(Icons.add),
+            )
+          : null,
+
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _currentIndex,
+        selectedItemColor: Colors.blue,
+        onTap: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.qr_code_scanner),
+            label: 'Scanner',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.message),
+            label: 'Message',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.folder),
+            label: 'My Files',
           ),
         ],
       ),
-      body: Column(
-        children: [_buildPinnedEventsSection(), // Affichage des événements épinglés sous forme de cartes
-          Expanded(child:_buildTaskList()), // Affichage des tâches sous forme de liste
-        ],
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            _showTasDialog(context), // ✨ Afficher le dialogue d'ajout de tâche
-        child: const Icon(Icons.add),
-      ),
-      
     );
   }
 
@@ -155,8 +203,8 @@ class _HomePageState extends State<HomePage> {
                 style: const TextStyle(fontSize: 12, color: Colors.blueGrey)),
           ],
         ),
-        trailing:
-            Icon(_getTaskIcon(task['type']!)), // Ajout de l’icône appropriée
+        trailing: Icon(
+            _getTaskIcon(task['type']!)), // Ajout de l’icône appropriée
       ),
     );
   }
@@ -220,7 +268,7 @@ class _HomePageState extends State<HomePage> {
         Icons.event_note;
   }
 
-// Affiche la boîte de dialogue pour ajouter une tâche
+  // Affiche la boîte de dialogue pour ajouter une tâche
   void _showTasDialog(BuildContext context) {
     TextEditingController titleController = TextEditingController();
     TextEditingController descriptionController = TextEditingController();

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ScannerScreen extends StatefulWidget {
+ const ScannerScreen({super.key});
+
+  
   @override
   _ScannerScreenState createState() => _ScannerScreenState();
 }
@@ -108,12 +111,12 @@ class _ScannerScreenState extends State<ScannerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context); // Retour à la page précédente
-          },
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () {
+        //     Navigator.pop(context); // Retour à la page précédente
+        //   },
+        // ),
         title: const Text("Search"),
         actions: [
           IconButton(
@@ -217,6 +220,14 @@ class _ScannerScreenState extends State<ScannerScreen> {
               onTap: () {
                 Navigator.pop(context);
                 _copyItem(index);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.drive_file_rename_outline),
+              title: const Text("Rename"),
+              onTap: () {
+                Navigator.pop(context);
+                //_copyItem(index);
               },
             ),
             ListTile(

@@ -7,7 +7,7 @@ class FAQPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('FAQ') ,
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.white,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),

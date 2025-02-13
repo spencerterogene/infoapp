@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 
-// class ChatApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: Messagescreen(),
-//     );
-//   }
-// }
+
 
 class MessageScreen extends StatefulWidget {
+   const MessageScreen({super.key});
+   
   @override
   _MessagescreenState createState() => _MessagescreenState();
 }
@@ -57,12 +51,12 @@ class _MessagescreenState extends State<MessageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        // ),
         title: const Text("Chats"),
         actions: [
           IconButton(icon: const Icon(Icons.search), onPressed: () {}),
@@ -79,6 +73,7 @@ class _MessagescreenState extends State<MessageScreen> {
               decoration: InputDecoration(
                 hintText: "Rechercher un chat...",
                 prefixIcon: const Icon(Icons.search),
+                suffixIcon: Icon(Icons.mic, color: Colors.grey),
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
               ),
